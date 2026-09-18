@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PrevButton from "../components/PrevButton";
 import InfoInput from "../components/InfoInput";
 import AddButton from "../components/AddButton";
@@ -26,11 +26,21 @@ const Info = ( { sendIngredientList }) => {
 
     setIngredientList((prev) => [...prev, newItem])
   };
-
+// 재료 입력값 유효성 체크
   const handleNext = () => {
-    //react-roucter-dom을 이용한 페이지 이동 
-    sendIngredientList(ingredientList);
-    history("/chat")
+    // 입력값이 있는 배열
+    const filterDataList = ingredientList.filter(
+      (item) => item.value.trim() !== ""
+    );
+    // console.log("🚀filterDataList:", filterDataList);
+    if (filterDataList.length) {
+      // 재료 입력값이 있는 경우
+      history("/chat");
+      return;
+    }
+
+    // 재료 입력값이 없는 경우
+    alert("재료를 최소 1개이상 입력해주세요");
   };
 
   //사용자가 클릭한 요소를 제외한 모든 요소들의 배열
@@ -52,9 +62,9 @@ const Info = ( { sendIngredientList }) => {
     event.preventDefault();
   };
 
-  useEffect(() => {
-    console.log("ingredientList",ingredientList);
-  }, [ingredientList]);
+  // useEffect(() => {
+  //   console.log("ingredientList",ingredientList);
+  // }, [ingredientList]);
 
 
 
